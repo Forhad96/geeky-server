@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-escape */
 import bcryptjs from 'bcryptjs';
-import { Schema, model } from 'mongoose';
+import { Schema, Types, model } from 'mongoose';
 import config from '../../config';
 import { USER_ROLE, USER_STATUS } from './user.constant';
 import { IUserModel, TUser } from './user.interface';
@@ -14,7 +14,7 @@ const userSchema = new Schema<TUser, IUserModel>(
     username: {
       type: String,
       required: false,
-      unique:true,
+      unique: true,
     },
     role: {
       type: String,
@@ -55,9 +55,27 @@ const userSchema = new Schema<TUser, IUserModel>(
     bio: { type: String },
     isVerified: { type: Boolean, default: false },
     isPremiumUser: { type: Boolean, default: false },
-    followers: [{ type: String }],
-    following: [{ type: String }],
-    posts: [{ type: String }],
+    followers: [
+      {
+        type: Types.ObjectId,
+        ref: 'User',
+        default: [],
+      },
+    ],
+    following: [
+      {
+        type: Types.ObjectId,
+        ref: 'User',
+        default: [],
+      },
+    ],
+    posts: [
+      {
+        type: Types.ObjectId,
+        ref: 'Post',
+        default: [],
+      },
+    ],
   },
   {
     timestamps: true,
