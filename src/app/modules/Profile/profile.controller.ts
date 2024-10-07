@@ -12,7 +12,7 @@ const getMyProfile = catchAsync(async (req: Request, res: Response) => {
     sendResponse(res, {
         success: true,
         statusCode: httpStatus.OK,
-        message: 'My Profile Retrive Successfully',
+        message: 'My Profile Retrieve Successfully',
         data: result,
     });
 });
