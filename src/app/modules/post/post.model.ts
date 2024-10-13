@@ -22,8 +22,8 @@ const postSchema = new Schema<IPost>(
     },
     author: {
       type: Schema.Types.ObjectId,
-      ref: 'User',
       required: true,
+      ref: 'User',
     },
     upVotes: {
       type: Number,

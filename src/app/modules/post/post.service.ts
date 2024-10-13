@@ -2,6 +2,8 @@ import mongoose from 'mongoose';
 import { IPost } from './post.interface';
 import { Post } from './post.model';
 import { User } from '../User/user.model';
+import { QueryBuilder } from '../../builder/QueryBuilder';
+import { PostSearchableFields } from './post.constant';
 
 const createPost = (payload: Partial<IPost>, userId: string) => {
   payload.author = new mongoose.Types.ObjectId(userId);
@@ -16,9 +18,25 @@ const getAllPost = async (
   const user = await User.findById(userId);
   let posts;
   if (user && user.isPremiumUser) {
-    posts = await Post.find(query);
+    const queryPost = new QueryBuilder(Post.find(), query)
+      .fields()
+      .paginate()
+      .sort()
+      .filter()
+    .search(PostSearchableFields);
+
+    posts = await queryPost.modelQuery;
+    // posts = await Post.find(query).populate('author');
   } else {
-    posts = await Post.find({ isPremium: false, ...query });
+    const queryPost = new QueryBuilder(Post.find({ isPremium: false }), query)
+      .fields()
+      .paginate()
+      .sort()
+      .filter()
+    .search(PostSearchableFields);
+
+    posts = await queryPost.modelQuery;
+    // posts = await Post.find({ isPremium: false, ...query }).populate('author');
   }
 
   return posts;

@@ -10,7 +10,6 @@ const handleCreatePost = catchAsync(async (req, res) => {
   // console.log(req.user);
   const userId = req.user._id;
   const post = await PostServices.createPost(req.body, userId);
-
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
