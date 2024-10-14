@@ -42,4 +42,19 @@ const handleGetAllPosts = catchAsync(async (req, res) => {
   });
 });
 
-export const PostController = { handleCreatePost, handleGetAllPosts };
+const handleGetSinglePost = catchAsync(async (req, res) => {
+  // console.log(req.user);
+  const postId = req.params.postId;
+  const post = await PostServices.getSinglePost(postId);
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Single Post Retrieve Successfully',
+    data: post,
+  });
+});
+export const PostController = {
+  handleCreatePost,
+  handleGetAllPosts,
+  handleGetSinglePost,
+};
