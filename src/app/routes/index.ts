@@ -4,6 +4,7 @@ import { UserRoutes } from '../modules/User/user.route';
 import { ProfileRoutes } from '../modules/Profile/profile.route';
 import { MeilisearchRoutes } from '../modules/Meilisearch/meilisearch.routes';
 import { PostRoutes } from '../modules/post/post.route';
+import { FollowRoutes } from '../modules/Follow/follow.route';
 
 const router = express.Router();
 
@@ -27,6 +28,10 @@ const moduleRoutes = [
   {
     path: '/posts',
     route: PostRoutes,
+  },
+  {
+    path: '/follows',
+    route: FollowRoutes,
   },
 ];
 
