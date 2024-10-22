@@ -24,10 +24,14 @@ router.get('/following',
   FollowControllers.handleGetFollowing
 );
 
+//get available user follow
 router.get(
   '/available-follow',
   auth(USER_ROLE.ADMIN, USER_ROLE.USER),
   FollowControllers.handleGetAvailableUsersToFollow
 );
+
+// get follower following count
+router.get('/follow-count', auth(USER_ROLE.ADMIN, USER_ROLE.USER),FollowControllers.handleGetFollowCount);
 
 export const FollowRoutes = router;

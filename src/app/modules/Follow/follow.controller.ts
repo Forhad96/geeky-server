@@ -87,6 +87,7 @@ const handleGetFollowing = catchAsync(async (req, res) => {
   });
 });
 
+// Get available users  follow
 const handleGetAvailableUsersToFollow = catchAsync(async (req, res) => {
   // const { userId } = req.params;
   const { _id: userId } = req.user;
@@ -100,10 +101,26 @@ const handleGetAvailableUsersToFollow = catchAsync(async (req, res) => {
   });
 });
 
+// Get follow count
+
+const handleGetFollowCount = catchAsync(async (req, res) => {
+  const { _id: userId } = req.user;
+  // console.log(userId);
+  const follow = await FollowServices.countFollowersAndFollowing(userId);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: `Follow count retrieved successfully.`,
+    data: follow,
+  });
+});
+
 export const FollowControllers = {
   handleFollow,
   handleUnFollow,
   handleGetFollowers,
   handleGetFollowing,
   handleGetAvailableUsersToFollow,
+  handleGetFollowCount,
 };

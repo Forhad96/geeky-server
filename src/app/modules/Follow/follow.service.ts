@@ -67,10 +67,10 @@ const getFollowing = async (userId: string): Promise<IFollow[]> => {
     .exec();
 };
 
-const countFollowersAndFollowing = (userId: string) => {
-  const followersCount = FollowModel.countDocuments({ following: userId });
-  const followingCount = FollowModel.countDocuments({ follower: userId });
-
+const countFollowersAndFollowing = async(userId: string) => {
+  const followersCount =await FollowModel.countDocuments({ following: userId });
+  const followingCount =await FollowModel.countDocuments({ follower: userId });
+console.log(followersCount);
   return {
     followers: followersCount,
     following: followingCount,
