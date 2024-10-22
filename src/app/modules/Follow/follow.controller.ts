@@ -43,8 +43,8 @@ const handleUnFollow = catchAsync(async (req, res) => {
 
 // Get followers of a user
 const handleGetFollowers = catchAsync(async (req, res) => {
-  const { userId } = req.params;
-
+  // const { userId } = req.params;
+  const { _id: userId } = req.user;
   const followers = await FollowServices.getFollowers(userId);
 
   if (followers.length === 0) {
@@ -64,23 +64,10 @@ const handleGetFollowers = catchAsync(async (req, res) => {
   });
 });
 
-const handleGetAvailableUsersToFollow = catchAsync(async (req, res) => {
-  const { userId } = req.params;
-
-  const follow = await FollowServices.getAvailableUsersToFollow(userId);
-
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: `Available Followers retrieved successfully.`,
-    data: follow,
-  });
-});
-
 // Get users a user is following
 const handleGetFollowing = catchAsync(async (req, res) => {
-  const { userId } = req.params;
-
+  // const { userId } = req.params;
+  const { _id: userId } = req.user;
   const following = await FollowServices.getFollowing(userId);
 
   if (following.length === 0) {
@@ -100,10 +87,23 @@ const handleGetFollowing = catchAsync(async (req, res) => {
   });
 });
 
+const handleGetAvailableUsersToFollow = catchAsync(async (req, res) => {
+  // const { userId } = req.params;
+  const { _id: userId } = req.user;
+  const follow = await FollowServices.getAvailableUsersToFollow(userId);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: `Available Followers retrieved successfully.`,
+    data: follow,
+  });
+});
+
 export const FollowControllers = {
   handleFollow,
   handleUnFollow,
   handleGetFollowers,
   handleGetFollowing,
-  handleGetAvailableUsersToFollow
+  handleGetAvailableUsersToFollow,
 };
